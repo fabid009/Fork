@@ -1,2 +1,2 @@
 # Fork
-This repiratory is for creating child processes using for loop
+This repository is for creating child processes using for loop
