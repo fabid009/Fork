@@ -11,22 +11,30 @@ def returnIndexOfLowestOrder():
     pexecute[min] = 1
     return min
 
-print("Enter no. of processes: ")
-n=int(input())
-
 process=[]
 pexecute=[]
 order=[]
 arrivalt=[]
 burstt=[]
 waitingt=[]
-
-for i in range(0,n):
-	process.insert(i,i+1)
-	pexecute.insert(i,0)
-	burstt.insert(i,int(raw_input("Enter Burst Time: ")))
-	arrivalt.insert(i,int(raw_input("Enter Arrival Time: ")))
-	print("")
+n=0
+a="p0"
+b=1
+c=2
+inp=open("input.txt","r")
+for line in inp:
+	a,b,c=line.split()
+	process.append(a)
+	pexecute.append(0)
+	burstt.append(int(b))
+	arrivalt.append(int(c))
+	
+n=len(process)
+print("Input read from file: ")
+print("Process: ",process)
+print("BurstT:  ",burstt)
+print("Arrival: ",arrivalt)
+print("")
 
 for i in range(0,n):
 	order.insert(i,arrivalt[i])
