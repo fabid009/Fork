@@ -1,16 +1,31 @@
 
-print("Enter number of processes: ")
-n=input()
-processes=[]
+#print("Enter number of processes: ")
+#n=input()
+process=[]
+priority=[]
+burstt=[]
+pexecute=[]
+n=0
+a="p0"
+b=1
+c=2
+inp=open("Input.txt","r")
+for line in inp:
+	a,b,c=line.split()
+	process.append(a)
+	pexecute.append(0)
+	burstt.append(int(c))
+	priority.append(int(b))
+	
+n=len(process)
+print("Input read from file: ")
+print("Process: ",process)
+print("BurstT:  ",burstt)
+print("Priority: ",priority)
+print("")
 
-for i in range(int(n)):
-	processes.insert(i,i+1)
-
-print("Enter burst: (seperated by space)")
-b_time=list(map(int, input())
-
-print("Enter priority no: (seperated by space)")
-priority=list(map(int, input().split()))
+#print("Enter priority no: (seperated by space)")
+#priority=list(map(int, input().split()))
 t_time=[]
 w_time=[]
 
@@ -22,36 +37,35 @@ for i in range(len(priority)-1):
 			swap=priority[j]
 			priority[j]=priority[j+1]
 			priority[j+1]=swap
-   			swap=b_time[j]
-			b_time[j]=b_time[j+1]
-			b_time[j+1]=swap
 
-			swap=processes[j]
-			processes[j]=processes[j+1]
-			processes[j+1]=swap
+   			swap=burstt[j]
+			burstt[j]=burstt[j+1]
+			burstt[j+1]=swap
+
+			swap=process[j]
+			process[j]=process[j+1]
+			process[j+1]=swap
 
 w_time.insert(0,0)
-t_time.insert(0,b_time[0])
+t_time.insert(0,burstt[0])
 
 i=1
-for i in range(len(processes)):
-	w_time.insert(i,w_time[i-1]+b_time[i-1])
-	t_time.insert(i,w_time[i]+b_time[i])
+for i in range(0,n):
+	w_time.insert(i,w_time[i-1]+burstt[i-1])
+	t_time.insert(i,w_time[i]+burstt[i])
 
-
-avgturnaroundtime=0
-avgwt=0
+sum1=0.0
+sum2=0.0
 i=0
-for i in range(len(processes)):
- avgwt=avgwt+w_time[i]
- avgturnaroundtime=aavgturnaroundtime+t_time[i]
-avgwt=float(avgwt)/int(n)
-avgavgturnaroundtime=float(avgavgturnaroundtime)/int(n)
-print("\n")
 
-i=0
-for i in range(int(n)):  				   	print(processes[i],'\t\t',b_time[i],'\t\t',w_time[i],'\t\t',t_time[i],'\n')
+for i in range(0,len(w_time)-1):
+	print("Waiting time of " + str(process[i]) + " = " + str(w_time[i]))
+ 	print("TurnAroundTime time of " + str(process[i]) + " = "+str(t_time[i]))
+	print("")
 
-print("Average Waiting time is: ",avgwt)
-print("Average Turn Around Time is: ",avgtat)
- 
+for i in range(0,n):
+	sum1=sum1+w_time[i]
+	sum2=sum2+t_time[i]
+
+print("Avg WaitingTime = " + str(float(float(sum1) / n)))
+print("Avg TurnAroundTime = " + str(float(float(sum2) / n))) 
