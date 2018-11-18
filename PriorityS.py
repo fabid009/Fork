@@ -1,6 +1,4 @@
 
-#print("Enter number of processes: ")
-#n=input()
 process=[]
 priority=[]
 burstt=[]
@@ -14,18 +12,16 @@ for line in inp:
 	a,b,c=line.split()
 	process.append(a)
 	pexecute.append(0)
-	burstt.append(int(c))
 	priority.append(int(b))
+	burstt.append(int(c))
 	
 n=len(process)
 print("Input read from file: ")
-print("Process: ",process)
-print("BurstT:  ",burstt)
-print("Priority: ",priority)
+print("Process: " + str(process))
+print("Priority: "+ str(priority))
+print("BurstT:  " + str(burstt))
 print("")
 
-#print("Enter priority no: (seperated by space)")
-#priority=list(map(int, input().split()))
 t_time=[]
 w_time=[]
 
@@ -50,7 +46,7 @@ w_time.insert(0,0)
 t_time.insert(0,burstt[0])
 
 i=1
-for i in range(0,n):
+for i in range(1,n):
 	w_time.insert(i,w_time[i-1]+burstt[i-1])
 	t_time.insert(i,w_time[i]+burstt[i])
 
@@ -58,9 +54,9 @@ sum1=0.0
 sum2=0.0
 i=0
 
-for i in range(0,len(w_time)-1):
+for i in range(0,len(w_time)):
 	print("Waiting time of " + str(process[i]) + " = " + str(w_time[i]))
- 	print("TurnAroundTime time of " + str(process[i]) + " = "+str(t_time[i]))
+ 	print("TurnAround time of " + str(process[i]) + " = "+str(t_time[i]))
 	print("")
 
 for i in range(0,n):
