@@ -1,14 +1,14 @@
-def returnFirstarrivaltime():
+def First_arrival_time():
     for i in range(0,len(arrivalt)):
-        if pexecute[i] != 1:
+        if pexecute[i] != 1:   #not already executed
             return i
 
-def returnIndexOfLowestOrder():
-    min = returnFirstarrivaltime()
-    for i in range(returnFirstarrivaltime() + 1,len(arrivalt)):
+def Index_of_lowest_order():
+    min = First_arrival_time()
+    for i in range(First_arrival_time() + 1,len(arrivalt)):
         if arrivalt[i] < arrivalt[min] and pexecute[i] != 1:
             min = i
-    pexecute[min] = 1
+    pexecute[min] = 1  #execute process with next arrival time
     return min
 
 process=[]
@@ -21,19 +21,19 @@ n=0
 a="p0"
 b=1
 c=2
-inp=open("input.txt","r")
+inp=open("Input.txt","r")
 for line in inp:
 	a,b,c=line.split()
 	process.append(a)
 	pexecute.append(0)
-	burstt.append(int(b))
-	arrivalt.append(int(c))
+	arrivalt.append(int(b))
+	burstt.append(int(c))
 	
 n=len(process)
 print("Input read from file: ")
-print("Process: ",process)
-print("BurstT:  ",burstt)
-print("Arrival: ",arrivalt)
+print("Process: " + str(process))
+print("ArrivalT: " + str(arrivalt))
+print("BurstT:  " + str(burstt))
 print("")
 
 for i in range(0,n):
@@ -48,7 +48,7 @@ runningprocess=[]
 turnaroundt=[]
 waiting.insert(0,0)
 for i in range(0,n):
-	proces=returnIndexOfLowestOrder()
+	proces=Index_of_lowest_order()
 	runningprocess.insert(i,proces+1)
 	sum+=burstt[proces]	
 	waiting.insert(i+1,sum)
