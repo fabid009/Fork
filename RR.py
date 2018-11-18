@@ -12,9 +12,6 @@ class Queue:
 		else:
 			return 0
 
-#print ("Enter no of processes : ")
-#n = int(input())
-
 print ("Enter Time Quantum : ")
 quantum=int(input())
 
@@ -35,32 +32,31 @@ for line in inp:
 	a,b,c=line.split()
 	process.append(a)
 	pexe.append(0)
-	bursttime.append(int(b))
-	arrivaltime.append(int(c))
+	arrivaltime.append(int(b))
+	bursttime.append(int(c))
 	
 n=len(process)
 print("Input read from file: ")
-print("Process: ",process)
-print("BurstT:  ",bursttime)
-print("Arrival: ",arrivaltime)
+print("Process: "+str(process))
+print("Arrival: "+str(arrivaltime))
+print("BurstT:  "+str(bursttime))
 print("")
 
 for i in range (0,n):
 	completiontime.insert(i,0)
 	turnaroundtime.insert(i,0)
 	procesinqueue.insert(i,0)
-	#bursttime.insert(i,int(raw_input("Enter burst time: ")))
-	#arrivaltime.insert(i,int(raw_input("Enter arrival time: ")))
 
 processingarray=[]
 processingarray.insert(0,arrivaltime[0])
 sum=arrivaltime[0]
 sumindex=1
-
 count = 0
+
 q=Queue()
-q.enqueue(process[0])
+q.enqueue(0)
 procesinqueue[0]=1
+
 while (count < n):
 	d=(q.dequeue())-1
 	if pexe[d]!=1:
@@ -74,14 +70,14 @@ while (count < n):
 		sumindex += 1
 	for i in range(0,n):
 		if arrivaltime[i] <= sum and procesinqueue[i] !=1:
-			q.enqueue(process[i])
+			q.enqueue(i)
 			procesinqueue[i]=1
 	if bursttime[d]==0:
 		count = count + 1
 		pexe[d]=1
 		completiontime[d]=sum
 	else:
-		q.enqueue(process[d])
+		q.enqueue(d)
 
 for i in range (0,n):
 	turnaroundtime[i]=completiontime[i]-arrivaltime[i]
@@ -93,4 +89,3 @@ for i in range(0,n):
 	print("")
 
 print("Avg TurnAroundTime = " + str(float(float(sum1) / n)))
-
