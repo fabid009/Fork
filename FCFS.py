@@ -1,76 +1,65 @@
-def First_arrival_time():
-    for i in range(0,len(arrivalt)):
-        if pexecute[i] != 1:   #not already executed
-            return i
-
-def Index_of_lowest_order():
-    min = First_arrival_time()
-    for i in range(First_arrival_time() + 1,len(arrivalt)):
-        if arrivalt[i] < arrivalt[min] and pexecute[i] != 1:
-            min = i
-    pexecute[min] = 1  #execute process with next arrival time
-    return min
+def sort():
+	for i in range(0,n):
+	       	ready_queue.append([arrival_time[i],burst_time[i],process[i]])
+	ready_queue.sort()
+	for i in range(0,n):
+		arrival_time[i] = ready_queue[i][0]
+		burst_time[i] = ready_queue[i][1]
+		process[i] = ready_queue[i][2]
+	print(" ")
 
 process=[]
-pexecute=[]
-order=[]
-arrivalt=[]
-burstt=[]
-waitingt=[]
-n=0
+ready_queue=[]
+arrival_time=[]
+burst_time=[]
+
 a="p0"
-b=1
-c=2
+b=0
+c=0
+n=0
 inp=open("Input.txt","r")
 for line in inp:
 	a,b,c=line.split()
 	process.append(a)
-	pexecute.append(0)
-	arrivalt.append(int(b))
-	burstt.append(int(c))
+	arrival_time.append(int(b))
+	burst_time.append(int(c))
 	
 n=len(process)
+
 print("Input read from file: ")
 print("Process: " + str(process))
-print("ArrivalT: " + str(arrivalt))
-print("BurstT:  " + str(burstt))
+print("ArrivalT: " + str(arrival_time))
+print("BurstT:  " + str(burst_time))
 print("")
 
+sort()
+
+print("After Swapping: ")
+print("Process: " + str(process))
+print("ArrivalT: " + str(arrival_time))
+print("BurstT:  " + str(burst_time))
+print("")
+
+time_of_completion=0
+waiting_time=[]
+turn_around_time=[]
+waiting_time.insert(0,0)
+
 for i in range(0,n):
-	order.insert(i,arrivalt[i])
+	time_of_completion = time_of_completion + burst_time[i]	
+	waiting_time.insert(i+1,time_of_completion)
+	turn_around_time.insert(i,time_of_completion-arrival_time[i])
 
-def swap(t1,t2):
-	return t2,t1
+wsum=0.0
+tsum=0.0
 
-sum=0
-waiting=[]
-runningprocess=[]
-turnaroundt=[]
-waiting.insert(0,0)
-for i in range(0,n):
-	proces=Index_of_lowest_order()
-	runningprocess.insert(i,proces+1)
-	sum+=burstt[proces]	
-	waiting.insert(i+1,sum)
-	if(arrivalt[i]>sum):
-		turnaroundt.insert(i,arrivalt[i]-sum)
-	else:
-		turnaroundt.insert(i,sum-arrivalt[i])
-
-sum1=0.0
-sum2=0.0
-
-for i in range(0,len(waiting)-1):
-	if(waiting[i]>arrivalt[i]):
-		sum1+=waiting[i]-arrivalt[i]
-	else:
-		sum1+=arrivalt[i]-waiting[i]
-	sum2+=turnaroundt[i]
-        if(waiting[i]>arrivalt[i]):
-		print("Waiting time of P" + str(runningprocess[i]) + " = " + str(waiting[i]-arrivalt[i]))
-        else:
-		print("Waiting time of P" + str(runningprocess[i]) + " = " + str(arrivalt[i]-waiting[i]))
- 	print("TurnAroundTime time of P" + str(runningprocess[i]) + " = " + str(turnaroundt[i]))
+for i in range(0,len(waiting_time)-1):
+	if(waiting_time[i]>0):
+		waiting_time[i] = waiting_time[i] - arrival_time[i]
+	wsum = wsum + waiting_time[i]
+	tsum = tsum + turn_around_time[i]
+	print("Waiting time of " + str(process[i]) + " = " + str(waiting_time[i]))
+     	print("TurnAroundTime time of " + str(process[i]) + " = " + str(turn_around_time[i]))
 	print("")
-print("Avg waiting time = " + str(float(float(sum1)/n)))
-print("Avg turnaround time = "+ str(float(float(sum2)/n)))
+print("Avg waiting time = " + str(float(float(wsum)/n)))
+print("Avg turnaround time = "+ str(float(float(tsum)/n)))
